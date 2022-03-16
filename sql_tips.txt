@@ -1,0 +1,5 @@
+코멘트 달기 
+ -COMMENT ON TABLE 테이블명 IS '코멘트내용';
+ -COMMENT ON COLUMN 컬럼명 IS '코멘트내용';
+
+데이터 중복 방지 : UNIQUE
