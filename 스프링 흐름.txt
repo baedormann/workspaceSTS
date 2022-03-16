@@ -1,0 +1,29 @@
+스프링 흐름
+
+프로젝트 실행 - 서버 종료 후 설정 : /
+
+1. web.xml
+ - index.jsp를 시작페이지로 설정
+ - 프로젝트 전체 경로의 인코딩을 UTF-8로 설정
+ - root-context.xml을 로드
+ - appServlet명으로 컨트롤러 생성, servlet-context.xml 로드
+
+2. root-context.xml(필요한 객체를 생성하는 코드)
+ - 전체적으로 필요한 객체를 생성
+ - BasicDataSource dataSourceSpied = new BasicDataSource();
+ - Log4jdbcProxyDataSource dataSource = new Log4jdbcProxyDataSource();
+ - SqlSessionFactoryBean sqlSessionFactory = new SqlSessionFactoryBean();
+ - SqlSessionTemplate sqlSessionTemplate = new SqlSessionTemplate();
+ *Log4j는 콘솔에 쿼리와 데이터를 표시하기 위한 객체이고 나머지는 DB관련.
+ - com.kh.board.service 패키지 안의 파일을 로드
+ -> BoardService, BoardServiceImpl
+ -> BoardServiceImpl 객체 생성
+    BoardServiceImpl boardService = new BoardServiceImpl();
+
+3. servlet-context.xml(필요한 객체를 생성하는 코드 + 페이지 요청 응답 처리 설정)
+ - 어노테이션 사용이 가능하게 설정
+ - resource의 경로 지정
+ - 페이지 이동 경로 설정
+ - com.kh.board.controller 패키지 안의 파일을 로드
+  -> BoardController = boardController = new BoardController();
+

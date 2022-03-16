@@ -4,9 +4,11 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.tiles.request.Request;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kh.board.service.BoardService;
@@ -31,5 +33,22 @@ public class BoardController {
 		List<BoardVO> list = boardService.selectBoardList();
 		model.addAttribute("boardList", list);
 		return "board_list"; //WEB-INF/views/board_list.jsp
+	}
+	//글등록 페이지로 이동
+	@GetMapping("/boardWrite")
+	public String BoardWrite() {
+		return "board_write";
+	}
+	//글등록
+	@PostMapping("/boardWrite")
+	public String boardWrite(BoardVO boardVO) { //boardVO는 커맨드객체
+		boardService.insertBoard(boardVO);
+		return "redirect:/board/boardList";
+	}
+	//글 상세조회
+	@GetMapping("/boardDetail")
+	public String boardDetail(int boardNum, Model model) { //boardVO는 커맨드객체
+		model.addAttribute("board", boardService.selectBoardDetail(boardNum));
+		return "board_detail";
 	}
 }
