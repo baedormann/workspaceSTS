@@ -1,0 +1,5 @@
+jsp 첨부파일 기능
+- form태그에서 enctype="multipart/form-data"
+- input file
+
+window - preperences - general - workspace - 위에 refresh 모두 체크

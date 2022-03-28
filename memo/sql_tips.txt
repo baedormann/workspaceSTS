@@ -3,3 +3,13 @@
  -COMMENT ON COLUMN 컬럼명 IS '코멘트내용';
 
 데이터 중복 방지 : UNIQUE
+
+상품번호 1씩 증가시켜 조회
+SELECT 'ITEM_'||
+        LPAD(NVL(MAX(TO_NUMBER(SUBSTR(ITEM_CODE, 6, 3))), 0) + 1, 3, 0)
+FROM SHOP_ITEM;
+
+SUBSTR(ITEM_CODE, 6, 3) : ITEM_CODE의 여섯 번째 자리에서 3글자를 가져옴
+TO_NUMBER : 문자를 숫자로 EX) 001 -> 1
+MAX : 조회된 데이터 중 가장 높은 값
+NVL : 널값을 지정한 특정데이터로 조회
