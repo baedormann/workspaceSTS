@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.shop.vo.ClassVO;
-import com.kh.shop.vo.StudentVO2;
+import com.kh.shop.vo.StudentVO;
 
 @Service("studentService")
 public class StudentServiceImpl implements StudentService{
@@ -20,8 +20,13 @@ public class StudentServiceImpl implements StudentService{
 	}
 
 	@Override
-	public List<StudentVO2> selectStudentList() {
-		return sqlSession.selectList("studentMapper.selectStudentList");
+	public List<StudentVO> selectStudentList(ClassVO classVO) {
+		return sqlSession.selectList("studentMapper.selectStudentList", classVO);
+	}
+
+	@Override
+	public StudentVO selectStudentDetail(StudentVO studentVO) {
+		return sqlSession.selectOne("studentMapper.selectStudentDetail", studentVO);
 	}
 	
 }

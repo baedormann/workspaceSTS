@@ -6,6 +6,8 @@ public class StudentVO {
 	private int korScore;
 	private int engScore;
 	private String classCode;
+	private String className;
+	
 	public int getStuNum() {
 		return stuNum;
 	}
@@ -35,6 +37,12 @@ public class StudentVO {
 	}
 	public void setClassCode(String classCode) {
 		this.classCode = classCode;
+	}
+	public String getClassName() {
+		return className;
+	}
+	public void setClassName(String className) {
+		this.className = className;
 	}
 	
 	
