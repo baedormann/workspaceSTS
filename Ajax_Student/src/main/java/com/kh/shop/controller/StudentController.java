@@ -24,7 +24,7 @@ public class StudentController {
 	@GetMapping("/studentList")
 	public String studentList(Model model, ClassVO classVO) {
 		model.addAttribute("classList", studentService.selectClassList());
-		model.addAttribute("stuList", studentService.selectStudentList(classVO));
+		model.addAttribute("stuList", studentService.selectStuList(classVO));
 		
 		return "student_manage";
 	}
@@ -32,17 +32,20 @@ public class StudentController {
 	@ResponseBody
 	@PostMapping("/studentListAjax")
 	public List<StudentVO> studentListAjax(ClassVO classVO) {
-		List<StudentVO> list = studentService.selectStudentList(classVO);
+		List<StudentVO> list = studentService.selectStuList(classVO);
 		
 		return list;
 	}
 
 	@ResponseBody
 	@PostMapping("/stuDetail")
-	public StudentVO stuDetail(StudentVO studentVO) {
-		System.out.println("stuNum = " + studentVO.getStuNum());
-		StudentVO vo = studentService.selectStudentDetail(studentVO);
-		
-		return vo;
+	public StudentVO stuDetail(String stuNum) {
+		return studentService.selectStuDetail(stuNum);
+	}
+
+	@ResponseBody
+	@PostMapping("/updateScore")
+	public void updateScore(StudentVO studentVO) {
+		studentService.updateScore(studentVO);
 	}
 }

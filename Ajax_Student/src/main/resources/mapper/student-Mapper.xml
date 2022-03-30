@@ -20,7 +20,7 @@
 			, CLASS_NAME
 		FROM CLASS_INFO
 	</select>
-	<select id="selectStudentList" resultMap="stuInfo">
+	<select id="selectStuList" resultMap="stuInfo">
 		SELECT STU_NUM
 			, STU_NAME
 			, KOR_SCORE
@@ -33,7 +33,7 @@
 		</if>
 		ORDER BY STU_NUM DESC
 	</select>
-	<select id="selectStudentDetail">
+	<select id="selectStuDetail" resultMap="stuInfo">
 		SELECT STU_NUM
 			, STU_NAME
 			, KOR_SCORE
@@ -41,4 +41,10 @@
 		FROM STUDENT_INFO
 		WHERE STU_NUM = #{stuNum}
 	</select>
+	<insert id="updateScore">
+		UPDATE STUDENT_INFO 
+		SET KOR_SCORE = #{korScore}
+			, ENG_SCORE = #{engScore}
+		WHERE STU_NUM = #{stuNum}
+	</insert>
 </mapper>

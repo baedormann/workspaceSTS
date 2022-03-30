@@ -77,30 +77,13 @@
 			</div>
 		</td>
 		<td>
-			<div>
-				<table class="stuInfoTable">
-					<colgroup>
-						<col width="20%">
-						<col width="30%">
-						<col width="20%">
-						<col width="30%">
-					</colgroup>
-					<tr>
-						<td>이름</td>
-						<td colspan="3">홍길동</td>
-					</tr>
-					<tr>
-						<td>국어</td>
-						<td>100</td>
-						<td>영어</td>
-						<td>100</td>
-					</tr>
-				</table>
+			<div id="stuDetailDiv">
+				
 			</div>
 		</td>
 	</tr>
 </table>
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
-<script type="text/javascript" src="/resources/student_manage.js?ver=12"></script>
+<script type="text/javascript" src="/resources/student_manage.js?ver=21"></script>
 </body>
 </html>

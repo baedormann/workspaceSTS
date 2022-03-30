@@ -20,13 +20,18 @@ public class StudentServiceImpl implements StudentService{
 	}
 
 	@Override
-	public List<StudentVO> selectStudentList(ClassVO classVO) {
-		return sqlSession.selectList("studentMapper.selectStudentList", classVO);
+	public List<StudentVO> selectStuList(ClassVO classVO) {
+		return sqlSession.selectList("studentMapper.selectStuList", classVO);
 	}
 
 	@Override
-	public StudentVO selectStudentDetail(StudentVO studentVO) {
-		return sqlSession.selectOne("studentMapper.selectStudentDetail", studentVO);
+	public StudentVO selectStuDetail(String stuNum) {
+		return sqlSession.selectOne("studentMapper.selectStuDetail", stuNum);
+	}
+
+	@Override
+	public void updateScore(StudentVO studentVO) {
+		sqlSession.insert("studentMapper.updateScore", studentVO);
 	}
 	
 }

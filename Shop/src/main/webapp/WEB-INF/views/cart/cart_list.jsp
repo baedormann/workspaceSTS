@@ -70,13 +70,16 @@ thead tr{
 												<input type="number" class="form-control" value="${cart.itemCnt }">
 											</div>
 											<div class="col-5 d-grid">
-												<button type="button" class="btn btn-warning">변경</button>
+												<button type="button" class="btn btn-warning" onclick="updateItemCnt(this, '${cart.itemCode}');">변경</button>
 											</div>
 										</div>
 									</td>
 									<th scope="col">${cart.totalPrice }</th>
 									<td>
-										<button type="button" class="btn btn-warning" onclick="deleteCart();">삭제</button>
+										<form action="/cart/deleteCart" method="post">
+										<input type="hidden" name="itemCode" value="${cart.itemCode }">
+										<button type="button" class="btn btn-warning" onclick="deleteCart(${cart.cartNum});">삭제</button>
+										</form>
 									</td>
 								</tr>
 							</c:forEach>

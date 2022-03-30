@@ -61,5 +61,16 @@
 			    , #{itemCnt}
 			)
 	</insert>
-	
+	<delete id="deleteCart">
+		DELETE
+		FROM SHOP_CART
+		WHERE CART_NUM = #{cartNum}
+	</delete>
+	<update id="updateItemCnt">
+		UPDATE SHOP_CART
+		SET
+		ITEM_CNT = #{itemCnt}
+		WHERE MEM_ID = #{memId}
+		AND ITEM_CODE = #{itemCode}
+	</update>
 </mapper>

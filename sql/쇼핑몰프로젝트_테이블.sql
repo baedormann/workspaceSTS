@@ -173,7 +173,9 @@ INSERT INTO SHOP_CART(
 );
 SELECT *
 FROM SHOP_CART;
-delete shop_cart;
+delete 
+FROM SHOP_CART
+WHERE CART_NUM = 1;
 -- 상품이미지명, 상품명, 가격, 수량, 총가격
 SELECT IMAGE.ATTACHED_IMG_NAME
     , ITEM.ITEM_NAME

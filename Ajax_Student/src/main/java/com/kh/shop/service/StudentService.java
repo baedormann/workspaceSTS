@@ -8,8 +8,10 @@ import com.kh.shop.vo.StudentVO;
 public interface StudentService {
 	List<ClassVO> selectClassList();
 
-	List<StudentVO> selectStudentList(ClassVO classVO);
+	List<StudentVO> selectStuList(ClassVO classVO);
 	
-	StudentVO selectStudentDetail(StudentVO studentVO);
+	StudentVO selectStuDetail(String stuNum);
+	
+	void updateScore(StudentVO studentVO);
 }
 

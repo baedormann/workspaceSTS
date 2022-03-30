@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.shop.service.CartService;
 import com.kh.shop.vo.CartVO;
@@ -48,7 +49,18 @@ public class CartController {
 		return "cart/cart_list";
 	}
 	@GetMapping("/deleteCart")
-	public String deleteCart() {
-		return "cart/delete_result";
+	public String deleteCart(int cartNum) {
+		cartService.deleteCart(cartNum);
+		
+		return "redirect:/cart/cartList";
+	}
+	@ResponseBody
+	@PostMapping("/updateItemCnt")
+	public void changeQuantity(HttpSession session, CartVO cartVO) {
+		String memId = ((MemberVO)session.getAttribute("loginInfo")).getMemId();
+		cartVO.setMemId(memId);
+		cartService.updateItemCnt(cartVO);
+		
+		//return "redirect:/cart/cartList";
 	}
 }
