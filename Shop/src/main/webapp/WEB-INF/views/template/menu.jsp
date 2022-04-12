@@ -70,6 +70,15 @@
 									<a class="nav-link" href="/admin/categoryManage">관리자메뉴</a>
 								</li>
 							</c:if>
+							<li class="nav-item">
+								<a class="nav-link" href="/test/test1">인터셉터테스트</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="/cookie/test1">쿠키테스트</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="/member/findPw">비밀번호 찾기</a>
+							</li>
 						</ul>
 					</div>
 				</div>

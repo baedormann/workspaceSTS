@@ -6,6 +6,7 @@ public class CartVO {
 	private String memId;
 	private int itemCnt;
 	private String createDate;
+	private String[] itemCodeArr;
 	
 	public int getCartNum() {
 		return cartNum;
@@ -41,6 +42,12 @@ public class CartVO {
 	public String toString() {
 		return "CartVO [cartNum=" + cartNum + ", itemCode=" + itemCode + ", memId=" + memId + ", itemCnt=" + itemCnt
 				+ ", createDate=" + createDate + "]";
+	}
+	public String[] getItemCodeArr() {
+		return itemCodeArr;
+	}
+	public void setItemCodeArr(String[] itemCodeArr) {
+		this.itemCodeArr = itemCodeArr;
 	}
 	
 	

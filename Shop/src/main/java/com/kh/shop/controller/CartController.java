@@ -60,7 +60,22 @@ public class CartController {
 		String memId = ((MemberVO)session.getAttribute("loginInfo")).getMemId();
 		cartVO.setMemId(memId);
 		cartService.updateItemCnt(cartVO);
+	}
+	//선택 상품을 장바구니에서 삭제
+	@GetMapping("/deleteCarts")
+	public String deleteCarts(CartVO cartVO, HttpSession session) {
+		String memId = ((MemberVO)session.getAttribute("loginInfo")).getMemId();
+		cartVO.setMemId(memId);
+		cartService.deleteCarts(cartVO);
 		
-		//return "redirect:/cart/cartList";
+		return "redirect:/cart/cartList";
+	}
+	//선택 상품을 구매
+	@GetMapping("/buyCarts")
+	public String buyCarts(CartVO cartVO, HttpSession session) {
+		String memId = ((MemberVO)session.getAttribute("loginInfo")).getMemId();
+		cartVO.setMemId(memId);
+		
+		return "cart/buy_carts";
 	}
 }

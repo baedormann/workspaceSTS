@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 모든 SQL문을 item태그 안에 작성 -->
+<mapper namespace="buyMapper">
+	<resultMap type="com.kh.shop.vo.BuyVO" id="buy">
+		<id column="BUY_NUM" property="buyNum"/>
+		<result column="MEM_ID" property="memId"/>
+		<result column="ITEM_CODE" property="itemCode"/>
+		<result column="ITEM_CNT" property="itemCnt"/>
+		<result column="BUY_PRICE" property="buyPrice"/>
+		<result column="BUY_DATE" property="buyDate"/>
+		<result column="CREATE_DATE" property="createDate"/>
+		<result column="ORDER_NUM" property="orderNum"/>
+	</resultMap>
+	
+	<!-- 선택 구매 -->
+	<insert id="insertBuys">
+		INSERT INTO SHOP_BUY (
+			BUY_NUM
+			, MEM_ID
+			, ITEM_CODE
+			, ITEM_CNT
+			, BUY_PRICE
+			, ORDER_NUM 
+		)
+		<foreach collection="buyList" item="buyInfo" separator="UNION ALL">
+		SELECT
+			#{buyInfo.buyNum}
+			, #{buyInfo.memId}
+			, #{buyInfo.itemCode}
+			, #{buyInfo.itemCnt}
+			, (SELECT ITEM_PRICE
+				FROM SHOP_ITEM
+				WHERE ITEM_CODE = #{buyInfo.itemCode}) * #{buyInfo.itemCnt} AS BUY_PRICE
+			, #{buyInfo.orderNum}
+		FROM DUAL
+		</foreach>
+	</insert>
+	
+	<select id="selectNextBuyNum" resultType="int">
+		SELECT NVL(MAX(BUY_NUM), 0) + 1
+		FROM SHOP_BUY
+	</select>
+</mapper>

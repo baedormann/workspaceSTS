@@ -13,11 +13,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.kh.shop.service.AdminService;
+import com.kh.shop.service.BuyService;
 import com.kh.shop.service.ItemService;
+import com.kh.shop.util.MyDateUtil;
+import com.kh.shop.vo.BuySearchVO;
+import com.kh.shop.vo.BuyVO;
 import com.kh.shop.vo.ImgVO;
 import com.kh.shop.vo.ItemVO;
 
@@ -29,7 +35,6 @@ public class AdminController {
 
 	@Resource(name = "itemService")
 	private ItemService itemService;
-	
 	/*
 	 * //관리자메뉴에서 상품관리 클릭 시 실행
 	 * 
@@ -45,41 +50,11 @@ public class AdminController {
 		//카테고리 목록 조회
 		model.addAttribute("categoryList", itemService.selectCategoryList());
 		
-		//관리자메뉴 목록 조회
-		model.addAttribute("menuList", adminService.selectMenuList());
-		
-		//서브메뉴 목록 조회
-		model.addAttribute("subMenuList", adminService.selectSubMenuList(menuCode));
-		
-		//선택 메뉴 지정
-		model.addAttribute("selectedMenu", menuCode);
-		
-		//선택 서브메뉴 지정
-		model.addAttribute("selectedSubMenu", subMenuCode);
-		
 		return "admin/reg_item";
 	}
 	//서브메뉴에서 카테고리관리 클릭 시 실행
 	@GetMapping("/categoryManage")
 	public String categoryManage(Model model, String menuCode, String subMenuCode){
-		//관리자메뉴 목록 조회
-		model.addAttribute("menuList", adminService.selectMenuList());
-		
-		//서브메뉴 목록 조회
-		if(menuCode == null) {
-			menuCode = "MENU_001";
-		}
-		model.addAttribute("subMenuList", adminService.selectSubMenuList(menuCode));
-		
-		
-		//선택 메뉴 지정
-		model.addAttribute("selectedMenu", menuCode);
-		
-		//선택 서브메뉴 지정
-		if(subMenuCode == null) {
-			subMenuCode = "SUB_MENU_001";
-		}
-		model.addAttribute("selectedSubMenu", subMenuCode);
 				
 		return "admin/category_manage";
 	}
@@ -90,38 +65,12 @@ public class AdminController {
 		//카테고리 목록 조회
 		model.addAttribute("categoryList", itemService.selectCategoryList());
 		
-		//관리자메뉴 목록 조회
-		model.addAttribute("menuList", adminService.selectMenuList());
-		
-		//서브메뉴 목록 조회
-		model.addAttribute("subMenuList", adminService.selectSubMenuList(menuCode));
-		
-		//선택 메뉴 지정
-		model.addAttribute("selectedMenu", menuCode);
-		
-		//선택 서브메뉴 지정
-		model.addAttribute("selectedSubMenu", subMenuCode);
-		
 		return "admin/item_manage";
 	}
 	
 	//회원목록 페이지로 이동
 	@GetMapping("/memberList")
 	public String memberList(Model model, String menuCode, String subMenuCode) {
-		//관리자메뉴 목록 조회
-		model.addAttribute("menuList", adminService.selectMenuList());
-		
-		//서브메뉴 목록 조회
-		model.addAttribute("subMenuList", adminService.selectSubMenuList(menuCode));
-		
-		//선택 메뉴 지정
-		model.addAttribute("selectedMenu", menuCode);
-		
-		//선택 서브메뉴 지정
-		if(subMenuCode == null) {
-			subMenuCode = "SUB_MENU_004";
-		}
-		model.addAttribute("selectedSubMenu", subMenuCode);
 		
 		return "admin/member_list";
 	}
@@ -222,12 +171,46 @@ public class AdminController {
 		
 		//상품 정보 INSERT(SHOP_ITEM)
 		itemVO.setItemCode(nextItemCode);
-		adminService.insertItem(itemVO);
+		imgVO.setImgList(imgList);
+		adminService.insertItem(itemVO, imgVO);
 		
 		//상품 이미지 정보 INSERT(ITEM_IMAGE)
-		imgVO.setImgList(imgList);
-		adminService.insertImages(imgVO);
+		//adminService.insertImages(imgVO);
 		
 		return "redirect:/admin/regItem?menuCode=MENU_001&subMenuCode=SUB_MENU_002";
 	}
+	//구매목록
+	@RequestMapping("/buyList")
+	public String buyList(Model model, String menuCode, String subMenuCode, BuySearchVO buySearchVO){
+		//이달의 1일 
+		String firstDate = MyDateUtil.getFirstDateOfNowMonth();
+		
+		//오늘날짜를 구함
+		String nowDate = MyDateUtil.getNowDateToString();
+		
+		if (buySearchVO.getSearchFromDate() == null) {
+			buySearchVO.setSearchFromDate(firstDate);
+		}
+		if (buySearchVO.getSearchToDate() == null) {
+			buySearchVO.setSearchToDate(nowDate);
+		}
+		//----------------페이징 정보 세팅--------------------//
+		// 1. 전체 데이터의 개수 조회
+		int listCnt = adminService.selectBuyListCnt(buySearchVO);
+		buySearchVO.setTotalCnt(listCnt);
+		
+		// 2. 페이징 처리를 위한 세팅 메소드 호출
+		buySearchVO.setPageInfo();
+		
+		
+		model.addAttribute("buyList", adminService.selectBuyList(buySearchVO));
+		
+		return "admin/buy_list";
+	}
+	@ResponseBody
+	@PostMapping("/selectBuyListDetail")
+	public List<BuyVO> selectBuyListDetail(String orderNum) {
+		return adminService.selectBuyListDetail(orderNum);
+	}
+	
 }

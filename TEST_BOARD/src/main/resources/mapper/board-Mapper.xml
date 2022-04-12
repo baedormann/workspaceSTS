@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 모든 SQL문을 mapper태그 안에 작성 -->
+<mapper namespace="boardMapper">
+	<resultMap type="com.kh.board.vo.BoardVO" id="board">
+		<id column="BOARD_NUM" property="boardNum"/>
+		<result column="BOARD_TITLE" property="boardTitle"/>
+		<result column="BOARD_CONTENT" property="boardContent"/>
+		<result column="BOARD_WRITER" property="boardWriter"/>
+		<result column="CREATE_DATE" property="createDate"/>
+	</resultMap>
+	<!-- 게시글 목록 조회 -->
+	<select id="selectBoardList" resultMap="board">
+		SELECT BOARD_NUM
+		    , BOARD_TITLE
+		    , BOARD_WRITER
+		    , CREATE_DATE
+		    , ROW_NUM
+		FROM 
+		(
+		    SELECT BOARD_NUM
+		        , BOARD_TITLE
+		        , BOARD_WRITER
+		        , CREATE_DATE
+		        , ROWNUM AS ROW_NUM
+            FROM TEST_BOARD
+		)
+		WHERE 1 = 1
+		<if test="searchValue != null and !searchValue.equals('')">
+		AND (UPPER(BOARD_TITLE) LIKE UPPER('%' || #{searchValue} || '%')
+		OR UPPER(BOARD_WRITER) LIKE UPPER('%' || #{searchValue} || '%'))
+		</if>
+		AND (ROW_NUM &gt;= #{endNum} AND ROW_NUM &lt;= #{startNum})
+		ORDER BY BOARD_NUM DESC
+		<!-- < : &lt; -->
+		<!-- > : &gt; -->
+	</select>
+	<!-- 총 게시글 개수(OR 검색한 게시글 개수) 조회 -->
+	<select id="selectBoardCnt" resultType="int">
+		SELECT COUNT(BOARD_NUM)
+		FROM (
+			SELECT BOARD_NUM
+			FROM 
+			(
+			    SELECT BOARD_NUM
+			        , BOARD_TITLE
+			        , BOARD_WRITER
+			        , CREATE_DATE
+			        , ROWNUM AS ROW_NUM
+	            FROM TEST_BOARD
+			)
+			<if test="searchValue != null and !searchValue.equals('')">
+			WHERE UPPER(BOARD_TITLE) LIKE UPPER('%' || #{searchValue} || '%')
+			OR UPPER(BOARD_WRITER) LIKE UPPER('%' || #{searchValue} || '%')
+			</if>
+			)
+		
+	</select>
+	
+	<!-- 게시글 작성 -->
+	<insert id="insertBoard">
+		INSERT INTO TEST_BOARD
+			(BOARD_NUM
+			, BOARD_TITLE
+			, BOARD_WRITER
+			, BOARD_CONTENT
+		) VALUES (
+			(SELECT NVL(MAX(BOARD_NUM), 0) FROM TEST_BOARD) + 1
+			, #{boardTitle}
+			, #{boardWriter}
+			, #{boardContent}
+			)
+	</insert>
+	<!-- 게시글 상세조회 -->
+	<select id="selectBoardDetail" resultMap="board">
+		SELECT BOARD_NUM
+			, BOARD_TITLE
+			, BOARD_WRITER
+			, BOARD_CONTENT
+			, CREATE_DATE
+		FROM TEST_BOARD
+		WHERE BOARD_NUM = #{boardNum}
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

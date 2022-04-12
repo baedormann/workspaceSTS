@@ -21,7 +21,7 @@
 		<result column="MEM_ID" property="memId"/>
 		<result column="ATTACHED_IMG_NAME" property="attachedImgName"/>
 	</resultMap>
-	
+
 	<!-- 장바구니 전체 목록 조회 -->
 	<select id="selectCartList" resultMap="cartView">
 		SELECT CART_NUM
@@ -73,4 +73,13 @@
 		WHERE MEM_ID = #{memId}
 		AND ITEM_CODE = #{itemCode}
 	</update>
+	<delete id="deleteCarts">
+		DELETE SHOP_CART
+		WHERE MEM_ID = #{memId}
+		AND ITEM_CODE IN
+		<foreach collection="itemCodeArr" item="itemCode" open="(" close=")" separator=",">
+			#{itemCode}
+		</foreach>
+	</delete>
+	
 </mapper>

@@ -17,4 +17,5 @@ public interface CartService {
 	//장바구니 상품 수량 변경
 	void updateItemCnt(CartVO cartVO);
 
+	void deleteCarts(CartVO cartVO);
 }

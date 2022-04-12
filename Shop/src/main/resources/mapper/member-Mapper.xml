@@ -39,6 +39,12 @@
 		    , #{memAddr}
 		)
 	</insert>
+	
+	<select id="selectMemEmail" resultType="String">
+		SELECT MEM_EMAIL
+		FROM SHOP_MEMBER
+		WHERE MEM_ID = #{memId}
+	</select>
 </mapper>
 
 

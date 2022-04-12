@@ -12,7 +12,7 @@ joinModal.addEventListener('hidden.bs.modal', function (event) {
    }
 });
 
-//lginModal이 닫힐 때 자동시작하는 이벤트
+//loginModal이 닫힐 때 자동시작하는 이벤트
 loginModal.addEventListener('hidden.bs.modal', function (event) {
    //joinModal안에 있는 모든 input태드 선택
    var tags = document.querySelectorAll('#loginModal input');

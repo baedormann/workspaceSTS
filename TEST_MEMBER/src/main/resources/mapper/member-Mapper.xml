@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 모든 SQL문을 mapper태그 안에 작성 -->
+<mapper namespace="memberMapper">
+	<resultMap type="com.kh.member.vo.MemberVO" id="member">
+		<id column="MEMBER_ID" property="memberId"/>
+		<result column="MEMBER_PASSWORD" property="memberPassword"/>
+		<result column="MEMBER_NAME" property="memberName"/>
+		<result column="MEMBER_AGE" property="memberAge"/>
+		<result column="MEMBER_ADDR" property="memberAddr"/>
+		<result column="MEMBER_BIRTHDAY" property="memberBirthday"/>
+		<result column="ADMIN_YN" property="adminYn"/>
+	</resultMap>
+	
+	<select id="selectMemberList" resultMap="member">
+		SELECT MEMBER_ID
+			, MEMBER_NAME
+			, MEMBER_AGE
+			, MEMBER_ADDR
+			, TO_CHAR(MEMBER_BIRTHDAY, 'yy"년" mm"월" dd"일"') AS MEMBER_BIRTHDAY
+			, ADMIN_YN
+		FROM TEST_MEMBER
+		WHERE ADMIN_YN = 'N'
+		ORDER BY MEMBER_ADDR DESC, MEMBER_ID ASC
+	</select>
+	<select id="login" resultMap="member">
+		SELECT MEMBER_ID
+			, MEMBER_NAME
+			, ADMIN_YN
+		FROM TEST_MEMBER
+		WHERE (MEMBER_ID = #{memberId}
+		AND MEMBER_PASSWORD = #{memberPassword})
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
