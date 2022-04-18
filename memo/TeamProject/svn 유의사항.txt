@@ -1,0 +1,5 @@
+내가 올릴 파일이 있다
+ : update -> commit
+
+내가 올릴 파일이 없다
+ : update만

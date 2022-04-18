@@ -3,13 +3,20 @@ package com.kh.shop.controller;
 import java.security.SecureRandom;
 
 import javax.annotation.Resource;
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.shop.service.MemberService;
 import com.kh.shop.vo.MemberVO;
@@ -23,6 +30,9 @@ import com.kh.shop.vo.MemberVO;
 public class MemberController {
 	@Resource(name = "memberService")
 	private MemberService memberService;
+	
+	@Autowired	// @Resource(name = "mailSender")를 사용해도 됨
+	private JavaMailSender mailSender;
 
 	@PostMapping("/join")
 	public String join(MemberVO memberVO) {
@@ -53,16 +63,30 @@ public class MemberController {
 	public String findPw() {
 		return "member/find_pw";
 	}
-
+	
+	@ResponseBody
 	@PostMapping("/findPw")
-	public String postFindPw(MemberVO memberVO, Model model) {
+	public void postFindPw(MemberVO memberVO, Model model) {
 		// 메일 정보 조회
 		String memEmail = memberService.selectMemEmail(memberVO);
 
 		// 임시 비밀번호 생성 소문자 + 대문자 + 숫자 포함 8자리
 		System.out.println(getImsiPw());
+		
+		try {
+			//메일 보내기
+			MimeMessage message = mailSender.createMimeMessage();
+			MimeMessageHelper messageHelper;
 
-		return "";
+			messageHelper = new MimeMessageHelper(message, true, "UTF-8");
+			messageHelper.setFrom("baedormann@gmail.com");
+			messageHelper.setTo("dohoon0301d@gmail.com");
+			messageHelper.setSubject("메일 테스트");
+			messageHelper.setText("테스트입니다.");
+			mailSender.send(message);
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		}
 	}
 
 	// 소문자 + 대문자 + 숫자 포함 8자리의 문자열 생성 및 리턴

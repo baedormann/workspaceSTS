@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 모든 SQL문을 mapper태그 안에 작성 -->
+<mapper namespace="deptMapper">
+	<resultMap type="com.kh.emp.vo.DeptVO" id="dept">
+		<id column="DEPT_NUM" property="deptNum"/>
+		<result column="DEPT_NAME" property="deptName"/>
+		<result column="DEPT_LOCATION" property="deptLocation"/>
+	</resultMap>
+
+	<select id="selectDeptList" resultMap="dept">
+		SELECT DEPT_NUM
+		    , DEPT_NAME
+		    , DEPT_LOCATION
+		FROM TEST_DEPARTMENT
+		ORDER BY DEPT_NUM DESC
+	</select>
+	
+	<insert id="insertDept">
+		INSERT INTO TEST_DEPARTMENT(
+		    DEPT_NUM 
+		    , DEPT_NAME
+		    , DEPT_LOCATION
+		) VALUES (
+		    CONCAT('DEPT', LPAD((SELECT NVL(MAX(TO_NUMBER(SUBSTR(DEPT_NUM, 5))), 0) + 1 FROM TEST_DEPARTMENT), 3, 0))
+			, #{deptName}
+			, #{deptLocation}
+		)
+	</insert>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

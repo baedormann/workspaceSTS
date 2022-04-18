@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 모든 SQL문을 mapper태그 안에 작성 -->
+<mapper namespace="empMapper">
+	<resultMap type="com.kh.emp.vo.EmpVO" id="emp">
+		<id column="EMP_NUM" property="empNum"/>
+		<result column="EMP_NAME" property="empName"/>
+		<result column="EMP_RANK" property="empRank"/>
+		<result column="EMP_AGE" property="empAge"/>
+		<result column="EMP_GENDER" property="empGender"/>
+		<result column="EMP_TELL" property="empTell"/>
+		<result column="DEPT_NUM" property="deptNum"/>
+		<result column="DEPT_NAME" property="deptName"/>
+		<result column="DEPT_LOCATION" property="deptLocation"/>
+	</resultMap>
+	
+	<select id="selectEmpList" resultMap="emp">
+		SELECT EMP_NUM
+		    , EMP_NAME
+		    , EMP_GENDER
+		    , EMP_AGE
+		    , EMP_TELL
+		    , DEPT_NAME
+		    , DEPT_LOCATION
+		FROM TEST_EMP EMP, TEST_DEPARTMENT DEPT
+		WHERE EMP.DEPT_NUM = DEPT.DEPT_NUM
+		ORDER BY EMP_NUM
+	</select>
+	
+	<insert id="insertEmp">
+		INSERT INTO TEST_EMP (
+		    EMP_NUM
+		    , EMP_NAME
+		    , EMP_RANK
+		    , EMP_AGE
+		    , EMP_GENDER
+		    , EMP_TELL
+		    , DEPT_NUM
+		) VALUES (
+		    CONCAT('EMP', LPAD((SELECT NVL(MAX(TO_NUMBER(SUBSTR(EMP_NUM, 4))), 0) + 1 FROM TEST_EMP), 3, 0))
+		    , #{empName}
+		    , #{empRank}
+		    , #{empAge}
+		    , #{empGender}
+		    , #{empTell}
+		    , #{deptNum}
+		)
+	</insert>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
