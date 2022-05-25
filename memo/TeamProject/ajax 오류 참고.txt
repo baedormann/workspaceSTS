@@ -1,0 +1,11 @@
+submit 안되게 하기 
+: form 태그에 onsubmit="return false;" 를 넣는다.
+
+엔터눌렀을 때 버튼 ajax 안 넘어갈 때
+: 1) input텍스트에(버튼 아님) onkeyup="enterkey();"를 넣는다.
+  2) function enterkey(){
+	//엔터키를 눌렀을 때
+	if (window.event.keyCode == 13) {
+		원하는Ajax();
+	}
+      }

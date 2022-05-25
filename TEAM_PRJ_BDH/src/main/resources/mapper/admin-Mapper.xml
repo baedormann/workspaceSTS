@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="adminMapper">
+	<!-- 임시 학생 -->
+	<resultMap type="com.kh.teamprj.vo.BaedohunStudentVO" id="student">
+		<id column="STU_NO" 		property="stuNo"/>
+		<result column="COLL_NO" 	property="collNo"/>
+		<result column="DEPT_NO" 	property="deptNo"/>
+		<result column="DOUBLE_NO" 	property="doubleNo"/>
+		<result column="STU_YEAR" 	property="stuYear"/>
+		<result column="STU_SEM" 	property="stuSem"/>
+		<result column="STU_STATUS" property="stuStatus"/>
+		<result column="MEM_NO" 	property="memNo"/>
+		<association property="baedohunDeptVO" 	 resultMap="adminMapper.dept"/>
+		<association property="baedohunMemberVO" resultMap="adminMapper.member"/>
+	</resultMap>
+	<!-- 임시 학과  -->
+	<resultMap type="com.kh.teamprj.vo.BaedohunDeptVO" id="dept">
+		<id column="DEPT_NO" 		property="deptNo" />
+		<result column="DEPT_NAME" 	property="deptName" />
+		<result column="COLL_NO" 	property="collNo" />
+		<association property="baedohunCollVO"  resultMap="adminMapper.coll"/>
+	</resultMap>
+	<!-- 임시 단과대  -->
+	<resultMap type="com.kh.teamprj.vo.BaedohunCollVO" id="coll">
+		<id column="COLL_NO" 		property="collNo" />
+		<result column="COLL_NAME" 	property="collName" />
+	</resultMap>
+	<!-- 임시 멤버  -->
+	<resultMap type="com.kh.teamprj.vo.BaedohunMemberVO" id="member">
+		<id column="MEM_NO" 			property="memNo" />
+		<result column="MEM_PW" 		property="memPw" />
+		<result column="MEM_NAME" 		property="memName" />
+		<result column="MEM_EMAIL" 		property="memEmail" />
+		<result column="MEM_ADDR" 		property="memAddr" />
+		<result column="MEM_PHONE" 		property="memPhone" />
+		<result column="MEM_IMAGE" 		property="memImage" />
+		<result column="MEM_GENDER" 	property="memGender" />
+		<result column="MEM_BIRTH"		property="memBirth" />
+		<result column="MEM_TYPE" 		property="memType" />
+		<result column="IS_JOIN" 		property="isJoin" />
+		<result column="CREATE_DATE" 	property="createDate" />
+		<result column="WITHDRAW_DATE"	property="withdrawDate" />
+	</resultMap>
+	<!-- 강의 -->
+	<resultMap type="com.kh.teamprj.vo.LecVO" id="lec">
+		<id column="LEC_NO" property="lecNo"/>
+		<result column="LEC_NAME"		property="lecName" />
+		<result column="LEC_SCORE"		property="lecScore" />
+		<result column="COLL_NO"		property="collNo" />
+		<result column="DEPT_NO"		property="deptNo" />
+		<result column="LEC_PR"		property="lecPr" />
+		<result column="CREATE_DATE"		property="createDate" />
+		<result column="MAX_NUM"		property="maxNum" />
+		<result column="NOW_NUM"		property="nowNum" />
+		<result column="LEC_DATE"		property="lecDate" />
+		<result column="LEC_MEMO"		property="lecMemo" />
+	</resultMap>
+	
+	<!-- 학생 조회 -->
+	<select id="selectStudentList" resultMap="student">
+		SELECT STU_NO
+		    , C.COLL_NAME
+		    , D.DEPT_NAME
+		    , DOUBLE_NO
+		    , STU_YEAR
+		    , STU_SEM
+		    , STU_STATUS
+		    , S.MEM_NO
+		    , MEM_NAME
+		FROM STUDENT S, DEPT D, COLLEGE C, MEMBER M
+		WHERE S.DEPT_NO = D.DEPT_NO
+		AND D.COLL_NO = C.COLL_NO
+		AND S.MEM_NO = M.MEM_NO
+		ORDER BY STU_NO DESC
+	</select>
+	<!-- 단과대 조회 -->
+	<select id="selectCollList" resultMap="coll">
+		SELECT COLL_NO
+			, COLL_NAME 
+		FROM COLLEGE
+	</select>
+	<!-- 학과 조회 -->
+	<select id="selectDeptList" resultMap="dept">
+		SELECT DEPT_NO
+			, DEPT_NAME
+			, COLL_NO
+		FROM DEPT
+	</select>
+	<!-- 강의 조회 -->
+	<select id="selectLecList" resultMap="lec">
+		SELECT LEC_NO 
+		    , LEC_NAME 
+		    , LEC_SCORE
+		    , COLL_NO 
+		    , DEPT_NO 
+		    , LEC_PR
+		    , CREATE_DATE  
+		    , MAX_NUM 
+		    , NOW_NUM 
+		    , LEC_DATE
+		    , LEC_MEMO
+		FROM LEC
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+

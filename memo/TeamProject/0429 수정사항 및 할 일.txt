@@ -1,0 +1,18 @@
+0429수정사항
+
+student-Mapper.xml	v
+academic.jsp              v
+StudentController.java    v
+StudentService.java	v
+StudentServiceImpl.java    v
+AcademicAppVO              v
+
+해야할 일
+휴복학일자 null들어가면 오류 뜸. alert으로 피해주기
+휴복학일자의 년, 월로 학기 찾아서 알아서 입력하기
+
+최대 세 학기까지 휴학신청할 수 있도록 기간 선택하게 하기(input 하나 더 필요)
+한 학기에 휴학신청이 여러 번 되지 않게 하기.
+세 학기를 초과하여 휴학신청 할 수 없게 하기.
+휴학신청은 휴학학기 또는 휴학학기의 이전학기에만 신청 가능
+복학신청은 이전학기에만 신청 가능

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="professorMapper">
+
+	<!-- 학생 -->
+
+	<resultMap type="com.kh.teamprj.vo.LecVO" id="student">
+		<id 	column="STU_NO" 		property="stuNo"/>
+		<result column="COLL_NO" 		property="collNo"/>
+		<result column="DEPT_NO" 		property="deptNo"/>
+		<result column="DOUBLE_NO" 		property="dobleNo"/>
+		<result column="STU_YEAR" 		property="stuYear"/>
+		<result column="STU_SEM" 		property="stuSem"/>
+		<result column="STU_STATUS" 	property="stuStatus"/>
+		<result column="MEM_NO" 		property="memNo"/>
+	</resultMap>
+	
+	<!-- 내 성적 -->
+	
+	<resultMap type="com.kh.teamprj.vo.StuScoreVO" id="grade">
+		<result column="LEC_NO" 		property="lecNo"/>
+		<result column="STU_GRADE" 		property="stuGrade"/>
+		<result column="STU_NO" 		property="stuNo"/>
+		<result column="SEM_NO" 		property="semNo"/>
+	</resultMap>
+	
+	<!--내 시간표  -->
+	
+	<resultMap type="com.kh.teamprj.vo.CollVO" id="class">
+		<id 	column="STU_NO" 		property="stuNo"/>
+		<result column="LEC_DAY" 		property="lecDay"/>
+		<result column="TIME_START" 	property="timeStart"/>
+		<result column="LEC_ROOM" 		property="lecRoom"/>
+		<result column="LEC_NO" 		property="lecNo"/>
+		<result column="TIME" 			property="classTime"/>
+		<result column="LEC_DAY" 		property="lecDay"/>
+	</resultMap>
+	
+	
+	<!-- 수강신청 -->
+	<insert id="insertClass">
+		INSERT INTO CLASS (
+		    STU_NO
+		    , LEC_NAME
+		    , LEC_SCORE
+		    , COLL_NO
+		    , DEPT_NO
+		    , LEC_PR
+		    , MAX_NUM
+		    , LEC_DATE
+		    <if test="lecMemo != null and !lecMemo.equals('')">
+		    , LEC_MEMO
+		    </if>
+		) VALUES (
+		    (SELECT 'LEC_'||(NVL(MAX(TO_NUMBER(SUBSTR(LEC_NO, 4))), 0) + 1) FROM LEC)
+		    , #{lecName}
+		    , #{lecScore}
+		    , #{collNo}
+		    , #{deptNo}
+		    , #{lecPr}
+		    , #{maxNum}
+		    , #{lecDate}
+		    <if test="lecMemo != null and !lecMemo.equals('')">
+		    , #{lecMemo}
+		    </if>
+		)
+	</insert>
+	
+	<!-- 성적 등록 -->
+	<insert id="insertScore">
+		INSERT INTO STU_SCORE(
+		    LEC_NO
+		    , GRADE
+		    , STU_NO
+		    , SEM_NO
+		) VALUES (
+		    #{lecNo}
+		    , #{grade}
+		    , #{stuNo}
+		    , #{semNo}
+		)
+	</insert>
+	
+	<!-- 강의 목록 -->
+	<select id="selectLecList" resultMap="lec">
+		SELECT LEC_NO
+		    , LEC_NAME
+		    , LEC_SCORE
+		    , COLL_NAME
+		    , DEPT_NAME
+		    , LEC_PR
+		    , LEC_DATE <!-- 강의 시간 요일이 합쳐 져있는대 수정 필요? -->
+		FROM LEC L, COLLEGE C, DEPT D
+		WHERE L.COLL_NO = C.COLL_NO
+		AND L.DEPT_NO = D.DEPT_NO
+	</select>
+	
+	<!-- 학기 정보 조회 -->
+	<select id="selectCollege" resultMap="coll">
+		SELECT COLL_NO
+		    , COLL_NAME
+		FROM COLLEGE
+	</select>
+	
+	<!-- 학생 조회 -->
+	<select id="selectStu">
+		SELECT STU_NO
+			, STU_YEAR
+			, STU_STATUS
+			, DEPT_NAME
+			, COLL_NAME
+			, MEM_NAME
+		FROM STUDENT S, COLLEGE C, DEPT D, MEMBER M
+		WHERE DEPT_NO = S.DEPT_NO
+		AND S.COLL_NO = D.COLL_NO
+		AND S.MEM_NO = M.MEM_NO
+	</select>
+	
+	<!-- 학과 조회 -->
+	<select id="selectDeptList" resultMap="dept">
+		SELECT DEPT_NO
+			, DEPT_NAME
+		FROM DEPT
+		WHERE COLL_NO = #{collNo}
+		
+	</select>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+

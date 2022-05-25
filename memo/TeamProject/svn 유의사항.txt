@@ -1,5 +1,27 @@
 내가 올릴 파일이 있다
- : update -> commit
+ 1)파일 작성 및 수정 시
+ - 서버와 내 소스의 동기화 -> update -> commit
 
 내가 올릴 파일이 없다
  : update만
+
+퇴실 전 체크사항!!!
+- 오늘 작업은 웬만하면 SVN에 COMMIT하자!
+  (단, 오늘 작업 내용에 오류가 있다 -> COMMIT하지 말자!)
+- 팀원들이 COMMIT한 내용들을 UPDATE 받는다.
+   팀원들이 동시에 UPDATE하면 꼬인다.
+A : UPDATE, COMMIT
+B : UPDATE, COMMIT
+C : UPDATE, COMMIT
+D : UPDATE, COMMIT 
+A, B, C : UPDATE
+위 순서대로
+
+
+입실 후 체크사항!!!
+- 집에서 소스 작성 : 깃으로 파일 받기
+- 팀에서 만약 집에서 소스코드를 작성한 멤버가 있다면 코드를 팀 전체가 update받아야 함
+
+commit update할 때
+- 무지성으로 전부 올리고 내리고 하지 말기!(target 주의)
+- 올릴 때는 본인이 실제 수정 및 추가한 코드만 올릴 것!(target, .classpath)

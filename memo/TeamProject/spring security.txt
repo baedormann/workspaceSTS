@@ -1,0 +1,28 @@
+설정파일
+
+web.xml
+root-context.xml(빈 생성)
+servlet-context.xml(컨트롤러 및 페이지 이동과 관련된 설정 및 빈 생성)
+security-context.xml(시큐리티 설정 및 빈 생성)
+
+
+----------------암호화하는 법--------------------
+
+1. pom.xml에 jar 스프링 시큐리티 파일 추가
+2. 시큐리티 설정과 관련된 객체 생성
+ - 암호화, 스프링 설정 객체
+3. 시큐리티 설정(SecurityConfig.java)
+ - WebSecurityConfigurerAdapter 클래스를 상속받아야지만 시큐리티 설정 가능
+ - 
+spring폴더 밑에 xml파일 생성
+web.xml의 context-param에 value 추가
+
+-------------------------------------------------
+- 접근 주체(Principal) : 특정한 페이지에 접근하려는 대상
+- 권한 : 특정한 페이지에 접근하기 위해 필요한 요소
+- 인증(Authorise) : 특정 페이지에 접근하려는 대상을 판별
+- 인가(Authentication) : 인증 받은 대상에게 권한이 있는지 판별
+
+
+인터셉터는 앱서블릿 -> 컨트롤러의 과정에서 구동
+필터는 앱서블릿 전에 구동됨.  
