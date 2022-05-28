@@ -267,7 +267,7 @@ function expel(stuNo){
 			type: 'post',
 			data: {'stuNo': stuNo},
 			success: function(result) {
-				alert('성공');
+				alert('제적처리되었습니다.');
 				searchStudentAjax();
 			},
 			error: function() {

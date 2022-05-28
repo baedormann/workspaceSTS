@@ -79,6 +79,9 @@
 							<li class="nav-item">
 								<a class="nav-link" href="/member/findPw">비밀번호 찾기</a>
 							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="/board/boardList">게시판</a>
+							</li>
 						</ul>
 					</div>
 				</div>

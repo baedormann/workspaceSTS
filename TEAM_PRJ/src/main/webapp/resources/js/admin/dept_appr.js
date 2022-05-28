@@ -91,23 +91,6 @@ function multiApprove(){
 	
 		objArr[i] = obj;
 	}
-	//JSON.stringify(objArr);
-	$.ajax({
-		url: '/buy/insertBuys', //요청경로
-		type: 'post',
-		data: {'data':JSON.stringify(objArr)}, //필요한 데이터 '데이터이름':값
-		success: function(result) {
-			//ajax 실행 성공 후 실행할 코드 작성
-			alert('상품을 구매하셨습니다.');
-			
-			location.href = '/cart/cartList';
-		},
-		error: function() {
-			//ajax 실행 실패 시 실행되는 구간
-			alert('실패');
-		}
-	});
-	
 }
 
 
