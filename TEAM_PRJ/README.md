@@ -1,6 +1,7 @@
 <p align="center">
     <img src="https://user-images.githubusercontent.com/49469777/169728992-410bc03c-f6f8-4194-a33c-6bcdab369ba0.PNG" alt="메인화면" width="100%">
-</p>
+</p>[projectPPT_-_KH대학교_학사시스템.pdf](https://github.com/baedormann/workspaceSTS/files/10150379/projectPPT_-_KH._.pdf)
+
 
 
 # 팀 프로젝트
@@ -8,6 +9,7 @@
 ---
 
 > 총 840시간, 5개월 수업에 대한 마침표이자 결과물인 팀 프로젝트입니다.
+> 
 
 ---
 
